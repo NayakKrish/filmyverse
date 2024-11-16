@@ -11,16 +11,30 @@ function CollapsibleCard({ movieDetails }) {
     setIsExpanded((prev) => !prev);
   };
 
+  // expand/collapse the card when "Enter" is pressed
+  const handleKeyPress = (event) => {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      toggleExpand();
+    }
+  };
+
   return (
     <div
+      role="button" // Define as an interactive element
+      tabIndex={0} // Make focusable with Tab key
+      aria-expanded={isExpanded} // Indicate expanded/collapsed state
+      aria-controls={`collapsible-content-${movieDetails?.id}`} // Associate with collapsible content
       onClick={toggleExpand}
       className="cursor-pointer rounded-md bg-gray-800 text-white p-4 shadow-sky-glow transform transition-all duration-200 ease-in-out hover:scale-102 hover:shadow-sky-glow-hover flex flex-col items-center w-full md:w-2/5"
+      onKeyDown={handleKeyPress}
     >
       {/* Card title */}
       <h4>{movieDetails?.title}</h4>
 
       {/* Collapsible content container */}
       <div
+        id={`collapsible-content-${movieDetails?.id}`} // Unique ID for ARIA control
         ref={contentRef}
         className={`overflow-hidden transition-all duration-300 ease-in-out`}
         style={{
@@ -30,11 +44,12 @@ function CollapsibleCard({ movieDetails }) {
         {/* Content inside the collapsible section */}
         <div
           className={`mt-2 text-sm text-gray-300 flex flex-col items-center justify-center gap-2`}
+          aria-live="polite" // Announce dynamic content for screen readers
         >
           {movieDetails?.poster_path && (
             <img
               src={`https://image.tmdb.org/t/p/original/${movieDetails?.poster_path}`}
-              alt="poster"
+              alt={`Poster of ${movieDetails?.title}`}
               className="h-52 rounded-md"
             />
           )}

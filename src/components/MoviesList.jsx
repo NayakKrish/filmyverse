@@ -78,6 +78,9 @@ const MoviesList = () => {
       {/* searchbar section */}
       <div className="flex flex-col items-center justify-center w-full gap-5 sticky top-0 z-10 bg-[#0a0a0a] h-auto px-2 py-5">
         <div className="flex items-center justify-center w-full gap-3">
+          <label htmlFor="searchbar" className="sr-only">
+            Search Movies
+          </label>
           <input
             type="search"
             id="searchbar"
@@ -87,11 +90,13 @@ const MoviesList = () => {
             value={searchInputValue}
             onChange={(e) => setSearchInputValue(e.target.value)}
             onKeyDown={handleKeyPress}
+            aria-label="Search Movies"
           />
           <button
             type="submit"
             className="rounded-md py-1 px-2 bg-sky-400 text-white font-medium hover:bg-sky-700 cursor-pointer"
             onClick={handleSearch}
+            aria-label="Search movies"
           >
             Search
           </button>
@@ -118,9 +123,8 @@ const MoviesList = () => {
           }
           loader={
             (((isLoadingForSearch || isFetchingForSearch) && !searchError) ||
-              ((isLoadingForFilters || isFetchingForFilters) && !filterError)) && (
-              <h4>Loading...</h4>
-            )
+              ((isLoadingForFilters || isFetchingForFilters) &&
+                !filterError)) && <h4>Loading...</h4>
           }
           endMessage={
             moviesData?.length > 0 && (
@@ -131,6 +135,7 @@ const MoviesList = () => {
           }
           className="p-2 md:p-8 flex flex-col items-center justify-center gap-5"
           scrollThreshold={0.8} // Trigger load when 80% of the page is scrolled
+          aria-live="polite"
         >
           {/* Render movies in collapsible cards */}
           {moviesData?.length
@@ -138,8 +143,12 @@ const MoviesList = () => {
                 return <CollapsibleCard key={index} movieDetails={movie} />;
               })
             : (!searchQuery
-                ? filteredResult && !isFetchingForFilters && !isLoadingForFilters
-                : searchResult && !isFetchingForSearch && !isLoadingForSearch) && (
+                ? filteredResult &&
+                  !isFetchingForFilters &&
+                  !isLoadingForFilters
+                : searchResult &&
+                  !isFetchingForSearch &&
+                  !isLoadingForSearch) && (
                 <h4 className="text-white text-center mt-5">
                   No results found!!
                 </h4>

@@ -16,42 +16,46 @@ const Filters = ({ filter, handleSelectFilter = () => {} }) => {
 
   return (
     <div className="flex items-center justify-center gap-3">
-      <div
+      <button
         className={filter === POPULAR_FILTER ? activeButtonStyle : buttonStyle}
         onClick={() => {
           handleSelectFilter(POPULAR_FILTER); // Trigger filter selection callback
         }}
+        aria-pressed={filter === POPULAR_FILTER}
       >
         Popular
-      </div>
-      <div
+      </button>
+      <button
         className={
           filter === NOW_PLAYING_FILTER ? activeButtonStyle : buttonStyle
         }
         onClick={() => {
           handleSelectFilter(NOW_PLAYING_FILTER);
         }}
+        aria-pressed={filter === NOW_PLAYING_FILTER}
       >
         Now Playing
-      </div>
-      <div
+      </button>
+      <button
         className={
           filter === TOP_RATED_FILTER ? activeButtonStyle : buttonStyle
         }
         onClick={() => {
           handleSelectFilter(TOP_RATED_FILTER);
         }}
+        aria-pressed={filter === TOP_RATED_FILTER}
       >
         Top Rated
-      </div>
-      <div
+      </button>
+      <button
         className={filter === UPCOMING_FILTER ? activeButtonStyle : buttonStyle}
         onClick={() => {
           handleSelectFilter(UPCOMING_FILTER);
         }}
+        aria-pressed={filter === UPCOMING_FILTER}
       >
         Upcoming
-      </div>
+      </button>
     </div>
   );
 };
