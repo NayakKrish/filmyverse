@@ -109,14 +109,6 @@ const MoviesList = () => {
       )}
 
       <div className="w-full">
-        {/* No results message */}
-        {!filteredResult?.results?.length &&
-          !searchResult?.results?.length &&
-          ((!searchIsLoading && !searchIsFetching) ||
-            (!filterIsLoading && !filterIsFetching)) && (
-            <h4 className="text-white text-center mt-5">No results found!!</h4>
-          )}
-
         {/* Infinite scrolling component */}
         <InfiniteScroll
           dataLength={moviesData?.length || 0} //This is important field to render the next data
@@ -125,8 +117,10 @@ const MoviesList = () => {
             pageNo < (filteredResult?.total_pages || searchResult?.total_pages) // Check if more pages are available
           }
           loader={
-            ((!searchIsLoading && !searchIsFetching) ||
-              (!filterIsLoading && !filterIsFetching)) && <h4>Loading...</h4>
+            (((searchIsLoading || searchIsFetching) && !searchError) ||
+              ((filterIsLoading || filterIsFetching) && !filterError)) && (
+              <h4>Loading...</h4>
+            )
           }
           endMessage={
             moviesData?.length > 0 && (
@@ -139,25 +133,16 @@ const MoviesList = () => {
           scrollThreshold={0.8} // Trigger load when 80% of the page is scrolled
         >
           {/* Render movies in collapsible cards */}
-          {moviesData?.length ? (
-            moviesData?.map((movie, index) => {
-              return (
-                <CollapsibleCard
-                  key={index}
-                  title={movie?.title}
-                  year={
-                    movie?.release_date && movie?.release_date.split("-")[0]
-                  }
-                  genre={movie?.genre_ids}
-                  director={""}
-                  plot={movie?.overview}
-                  poster={movie?.poster_path || null}
-                />
-              );
-            })
-          ) : (
-            <></>
-          )}
+          {moviesData?.length
+            ? moviesData?.map((movie, index) => {
+                return <CollapsibleCard key={index} movieDetails={movie} />;
+              })
+            : ((filteredResult && !filterIsFetching) ||
+                (searchResult && !searchIsFetching)) && (
+                <h4 className="text-white text-center mt-5">
+                  No results found!!
+                </h4>
+              )}
         </InfiniteScroll>
 
         {/* Scroll-to-top button */}
