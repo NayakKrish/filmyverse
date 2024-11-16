@@ -1,70 +1,186 @@
-# Getting Started with Create React App
+# **Movies Explorer**
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A React-based application for exploring movies with features like infinite scrolling, filters, search functionality, collapsible movie details, and accessibility-enhanced components.
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## **Table of Contents**
 
-### `npm start`
+1. [Features](#features)
+2. [Getting Started](#getting-started)
+   - [Prerequisites](#prerequisites)
+   - [Installation](#installation)
+3. [Project Structure](#project-structure)
+4. [Components](#components)
+5. [API Integration](#api-integration)
+6. [Accessibility Features](#accessibility-features)
+7. [Contributing](#contributing)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+---
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## **Features**
 
-### `npm test`
+- Browse movies with infinite scrolling.
+- Apply filters like _Popular_, _Now Playing_, _Top Rated_, and _Upcoming_.
+- Search for movies by title.
+- View movie details in an expandable collapsible card.
+- Accessible UI with screen reader and keyboard navigation support.
+- Optimized for performance and scalability.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+---
 
-### `npm run build`
+## **Getting Started**
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### **Prerequisites**
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Ensure you have the following installed on your system:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- **Node.js** (>= 14.x)
+- **npm** or **yarn**
+- A web browser
 
-### `npm run eject`
+### **Installation**
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+1. Clone the repository:
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+   ```bash
+   git clone https://github.com/NayakKrish/filmyverse.git
+   ```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+2. Navigate to the project directory:
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+   ```bash
+   cd filmyverse
+   ```
 
-## Learn More
+3. Install dependencies:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+   ```bash
+   npm install
+   # or
+   yarn install
+   ```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+4. Start the development server:
 
-### Code Splitting
+   ```bash
+   npm start
+   # or
+   yarn start
+   ```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+5. Open the app in your browser at http://localhost:3000.
 
-### Analyzing the Bundle Size
+## **Project Structure**
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+```bash
+filmyverse/
+│
+├── public/             # Static assets
+├── src/
+│   ├── assets/         # Images and icons
+│   ├── components/     # React components
+│   │   ├── Filters.js
+│   │   ├── MoviesList.js
+│   │   ├── CollapsibleCard.js
+│   │   └── ScrollToTopButton.js
+│   ├── constants/      # Reusable constants
+│   │   ├── filtersConstants.js
+│   │   ├── genresConstants.js
+│   ├── redux/          # Redux slices for API integration
+│   │   ├── movieApiSlice.js
+│   │   └── searchApiSlice.js
+│   ├── App.js          # Root component
+│   ├── index.js        # Entry point
+│
+└── package.json        # Project configuration
+```
 
-### Making a Progressive Web App
+## **Components**
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+### MoviesList
 
-### Advanced Configuration
+**Description:**  
+The core component that integrates search, filters, and infinite scrolling for displaying a list of movies.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+**Key Features:**
 
-### Deployment
+- Search bar with search functionality.
+- Filter buttons for predefined categories.
+- Infinite scrolling with dynamic data loading.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+### CollapsibleCard
 
-### `npm run build` fails to minify
+**Description:**  
+Displays detailed movie information in a collapsible format.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+**Key Features:**
+
+- Clickable cards for expanding and collapsing details.
+- Displays movie poster, genre, release date, ratings, and overview.
+
+### Filters
+
+**Description:**  
+Provides filter options for movie categories.
+
+**Key Features:**
+
+- Interactive buttons for each filter.
+- Highlights the active filter.
+
+### ScrollToTopButton
+
+**Description:**  
+A floating button that allows users to scroll to the top of the page.
+
+**Key Features:**
+
+- Appears after scrolling down by a certain amount.
+- Smooth scrolling to the top when clicked.
+
+## API Integration
+
+This application integrates with **The Movie Database (TMDb) API** to fetch movie data and display it to the user.
+
+### Main API Endpoints Used
+
+- **`/movie/popular`**  
+  Fetches popular movies.
+
+- **`/movie/now_playing`**  
+  Fetches movies currently playing in theaters.
+
+- **`/movie/top_rated`**  
+  Fetches top-rated movies.
+
+- **`/movie/upcoming`**  
+  Fetches upcoming movies.
+
+- **`/search/movie`**  
+  Fetches movies based on a search term.
+
+These endpoints provide the necessary data for displaying various categories of movies and support search functionality in the application.
+
+## Accessibility Features
+
+This application includes several features to ensure accessibility for all users:
+
+- **Keyboard Navigation**:  
+  All interactive elements are accessible using the keyboard. Users can navigate through the app using the `Tab`, `Enter`, and `Arrow` keys.
+
+- **Screen Reader Compatibility**:  
+  Key information such as movie titles, descriptions, and details are structured in a way that ensures easy interpretation by screen readers.
+
+- **High Contrast Mode**:  
+  The UI includes high contrast elements to improve visibility for users with visual impairments.
+
+## Contributing
+
+If you want to contribute to this project, please follow these steps:
+
+1. **Fork** the repository.
+2. **Create a new feature branch**:
+   ```bash
+   git checkout -b your-feature-branch
+   ```
