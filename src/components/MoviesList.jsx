@@ -17,8 +17,8 @@ const MoviesList = () => {
   const {
     data: filteredResult,
     error: filterError,
-    isFetching: filterIsFetching,
-    isLoading: filterIsLoading,
+    isFetching: isFetchingForFilters,
+    isLoading: isLoadingForFilters,
   } = useGetFilteredMoviesQuery(
     { filter: filter, pageNo: pageNo },
     { skip: !filter } // Skip the query if no filter is selected
@@ -28,8 +28,8 @@ const MoviesList = () => {
   const {
     data: searchResult,
     error: searchError,
-    isLoading: searchIsFetching,
-    isFetching: searchIsLoading,
+    isLoading: isFetchingForSearch,
+    isFetching: isLoadingForSearch,
   } = useGetSearchedResultQuery(
     { searchQuery: searchQuery, pageNo: pageNo },
     { skip: searchQuery === "" } // Skip the query if the search query is empty
@@ -117,8 +117,8 @@ const MoviesList = () => {
             pageNo < (filteredResult?.total_pages || searchResult?.total_pages) // Check if more pages are available
           }
           loader={
-            (((searchIsLoading || searchIsFetching) && !searchError) ||
-              ((filterIsLoading || filterIsFetching) && !filterError)) && (
+            (((isLoadingForSearch || isFetchingForSearch) && !searchError) ||
+              ((isLoadingForFilters || isFetchingForFilters) && !filterError)) && (
               <h4>Loading...</h4>
             )
           }
@@ -137,8 +137,9 @@ const MoviesList = () => {
             ? moviesData?.map((movie, index) => {
                 return <CollapsibleCard key={index} movieDetails={movie} />;
               })
-            : ((filteredResult && !filterIsFetching) ||
-                (searchResult && !searchIsFetching)) && (
+            : (!searchQuery
+                ? filteredResult && !isFetchingForFilters && !isLoadingForFilters
+                : searchResult && !isFetchingForSearch && !isLoadingForSearch) && (
                 <h4 className="text-white text-center mt-5">
                   No results found!!
                 </h4>
