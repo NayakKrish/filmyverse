@@ -1,8 +1,8 @@
 import React, { useState, useRef } from "react";
 
 function CollapsibleCard({ title, year, genre, director, plot, poster }) {
-  const [isExpanded, setIsExpanded] = useState(false);
-  const contentRef = useRef(null);
+  const [isExpanded, setIsExpanded] = useState(false); // State to track whether the card is expanded or collapsed
+  const contentRef = useRef(null); // Reference to the collapsible content for dynamic height calculation
 
   // Toggle function to expand/collapse the card
   const toggleExpand = () => {
@@ -14,6 +14,7 @@ function CollapsibleCard({ title, year, genre, director, plot, poster }) {
       onClick={toggleExpand}
       className="cursor-pointer rounded-md bg-gray-800 text-white p-4 shadow-sky-glow transform transition-all duration-200 ease-in-out hover:scale-102 hover:shadow-sky-glow-hover flex flex-col items-center w-full md:w-2/5"
     >
+      {/* Card title */}
       <h4>{title}</h4>
 
       {/* Collapsible content container */}
@@ -24,7 +25,7 @@ function CollapsibleCard({ title, year, genre, director, plot, poster }) {
           maxHeight: isExpanded ? `${contentRef.current.scrollHeight}px` : "0",
         }}
       >
-        {/* {isExpanded && ( */}
+        {/* Content inside the collapsible section */}
         <div
           className={`mt-2 text-sm text-gray-300 flex flex-col items-center justify-center gap-2`}
         >
@@ -46,7 +47,6 @@ function CollapsibleCard({ title, year, genre, director, plot, poster }) {
           </p>
           <p className="text-center">{plot}</p>
         </div>
-        {/* )} */}
       </div>
     </div>
   );

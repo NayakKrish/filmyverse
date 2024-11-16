@@ -1,5 +1,6 @@
 import { baseApiSlice } from "./baseApiSlice";
 
+// Create a new movie API slice by injecting additional endpoints into the baseApiSlice
 const movieApiSlice = baseApiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getFilteredMovies: builder.query({

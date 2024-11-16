@@ -1,5 +1,6 @@
 import { baseApiSlice } from "./baseApiSlice";
 
+// Create a new search API slice by injecting additional endpoints into the baseApiSlice
 const searchApiSlice = baseApiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getSearchedResult: builder.query({
